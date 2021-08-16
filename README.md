@@ -73,7 +73,7 @@ spec:
     image: gcr.io/kaniko-project/executor:latest
     imagePullPolicy: IfNotPresent
     args: ["--dockerfile=/workspace/dockerfile",
-            "--context=dir://workspace",
+            "--context=dir:///workspace",
             "--destination=linjinbao66/ubuntu:0.0.2"]
             #"--tarPath=/workspace/ubuntu-network-utils-docker-image.tar"]
     volumeMounts:

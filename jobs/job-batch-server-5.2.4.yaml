@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: batch-server
+spec:
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
+      containers:
+      - name: batch-server
+        image: gcr.io/kaniko-project/executor:latest
+        imagePullPolicy: IfNotPresent
+        args: ["--dockerfile=/workspace/Dockerfile",
+               "--context=dir:///workspace",
+               "--destination=registry.cn-hangzhou.aliyuncs.com/shuqi66/batch-server:5.2.4"]
+        volumeMounts:
+          - name: kaniko-secret
+            mountPath: /kaniko/.docker
+          - name: dockerfile-storage
+            mountPath: /workspace
+            subPath: batch-server-5.2.4
+      restartPolicy: Never
+      volumes:
+        - name: kaniko-secret
+          secret:
+            secretName: aliyun
+            items:
+              - key: .dockerconfigjson
+                path: config.json
+        - name: dockerfile-storage
+          persistentVolumeClaim:
+            claimName: dockerfile-claim
+
