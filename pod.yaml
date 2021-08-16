@@ -7,10 +7,11 @@ spec:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:latest
     imagePullPolicy: IfNotPresent
-    args: ["--dockerfile=/workspace/dockerfile",
-            "--context=dir://workspace",
-            "--destination=linjinbao66/ubuntu:0.0.2"]
-            #"--tarPath=/workspace/ubuntu-network-utils-docker-image.tar"]
+    args: ["--dockerfile=/workspace/Dockerfile",
+            "--context=dir:///workspace",
+            "--destination=linjinbao66/batch-server:0.0.1",
+            "--no-push",
+            "--tarPath=/workspace/batch-server-image.tar"]
     volumeMounts:
       - name: kaniko-secret
         mountPath: /kaniko/.docker
